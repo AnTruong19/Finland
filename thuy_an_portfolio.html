@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thuy An Truong — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0f2845; --blue: #1a5fa8; --sky: #5bafd6;
+    --ice: #daeef9; --fog: #f0f7fc; --white: #ffffff;
+    --text: #1a2a3a; --muted: #5a7a96; --line: #cce3f0;
+  }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+  html { scroll-behavior: smooth; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--navy); cursor: pointer; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  .nav-links a:hover { color: var(--blue); }
+
+  .section { padding: 5rem 3rem; }
+  .inner { max-width: 1060px; margin: 0 auto; }
+  .section-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sky); display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; }
+  .section-label::after { content: ''; display: block; height: 1px; width: 2.5rem; background: var(--sky); }
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; color: var(--navy); line-height: 1.15; margin-bottom: 2.5rem; }
+  h2 em { font-style: italic; color: var(--blue); }
+
+  #hero {
+    min-height: 92vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 4rem 3rem 3rem;
+    background: linear-gradient(135deg, var(--white) 55%, var(--fog) 100%);
+    position: relative; overflow: hidden;
+  }
+  #hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 440px; height: 440px; border-radius: 50%; background: radial-gradient(circle, var(--ice) 0%, transparent 70%); opacity: 0.7; pointer-events: none; }
+  .hero-eyebrow { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sky); margin-bottom: 1.1rem; display: flex; align-items: center; gap: 0.6rem; }
+  .hero-eyebrow::before { content: ''; display: block; width: 1.8rem; height: 1px; background: var(--sky); }
+  .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 4.5vw, 4.5rem); font-weight: 300; line-height: 1.05; color: var(--navy); margin-bottom: 0.5rem; }
+  .hero-name em { font-style: italic; color: var(--blue); }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; color: var(--muted); margin-bottom: 1.5rem; }
+  .hero-bio { font-size: 0.9rem; line-height: 1.75; color: var(--muted); max-width: 460px; margin-bottom: 2rem; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-p { padding: 0.75rem 1.8rem; border-radius: 2px; background: var(--navy); color: var(--white); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+  .btn-p:hover { background: var(--blue); transform: translateY(-1px); }
+  .btn-o { padding: 0.75rem 1.8rem; border-radius: 2px; border: 1px solid var(--line); background: transparent; color: var(--navy); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+  .btn-o:hover { border-color: var(--blue); color: var(--blue); }
+
+  .hero-card { background: var(--white); border: 1px solid var(--line); border-radius: 4px; padding: 2.2rem; box-shadow: 0 18px 50px rgba(15,40,69,0.08); width: 320px; justify-self: center; position: relative; z-index: 1; }
+  .hc-title { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sky); margin-bottom: 1.25rem; }
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin-bottom: 1.25rem; }
+  .stat { border-left: 2px solid var(--ice); padding-left: 0.9rem; }
+  .stat-n { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 600; color: var(--navy); line-height: 1; }
+  .stat-l { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { font-size: 0.68rem; font-weight: 500; padding: 0.25rem 0.65rem; border-radius: 20px; background: var(--fog); color: var(--blue); border: 1px solid var(--line); }
+
+  #experience { background: var(--white); }
+  .exp-grid { display: grid; gap: 1.25rem; }
+  .exp-card { display: grid; grid-template-columns: 150px 1fr; gap: 0 2rem; padding: 1.75rem 2rem; background: var(--white); border: 1px solid var(--line); border-radius: 4px; transition: border-color 0.2s, box-shadow 0.2s; }
+  .exp-card:hover { border-color: var(--sky); box-shadow: 0 6px 24px rgba(91,175,214,0.1); }
+  .exp-meta { text-align: right; padding-top: 0.2rem; }
+  .exp-date { font-size: 0.72rem; font-weight: 500; color: var(--sky); line-height: 1.5; }
+  .exp-loc { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+  .exp-role { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.15rem; }
+  .exp-co { font-size: 0.82rem; font-weight: 500; color: var(--blue); margin-bottom: 0.6rem; }
+  .exp-ul { list-style: none; }
+  .exp-ul li { font-size: 0.85rem; color: var(--muted); line-height: 1.65; padding-left: 1rem; position: relative; margin-bottom: 0.25rem; }
+  .exp-ul li::before { content: '—'; position: absolute; left: 0; color: var(--sky); }
+
+  #education { background: var(--fog); }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+  .edu-card { background: var(--white); border: 1px solid var(--line); border-radius: 4px; padding: 1.75rem; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  .edu-card:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(15,40,69,0.08); }
+  .edu-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--sky), var(--blue)); }
+  .edu-deg { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; line-height: 1.3; }
+  .edu-sch { font-size: 0.82rem; font-weight: 500; color: var(--blue); margin-bottom: 0.2rem; }
+  .edu-yr { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.85rem; }
+  .edu-detail { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+  .edu-badge { display: inline-block; margin-top: 0.65rem; font-size: 0.68rem; font-weight: 500; padding: 0.22rem 0.65rem; border-radius: 20px; background: var(--ice); color: var(--blue); }
+
+  #skills { background: var(--white); }
+  .skills-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2.5rem; }
+  .sg-title { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sky); margin-bottom: 1.1rem; padding-bottom: 0.65rem; border-bottom: 1px solid var(--line); }
+  .sk { display: flex; justify-content: space-between; align-items: center; padding: 0.45rem 0; border-bottom: 1px solid rgba(204,227,240,0.4); font-size: 0.85rem; color: var(--text); }
+  .sk:last-child { border-bottom: none; }
+  .sk-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sky); flex-shrink: 0; }
+  .sk-level { font-size: 0.72rem; color: var(--sky); }
+  .sk-level.muted { color: var(--muted); }
+
+  #certs { background: var(--navy); }
+  #certs .section-label { color: var(--sky); }
+  #certs .section-label::after { background: var(--sky); }
+  #certs h2 { color: var(--white); }
+  #certs h2 em { color: var(--sky); }
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .cert-card { padding: 1.6rem 1.75rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; background: rgba(255,255,255,0.04); transition: background 0.2s, border-color 0.2s; }
+  .cert-card:hover { background: rgba(91,175,214,0.1); border-color: rgba(91,175,214,0.3); }
+  .cert-ico { font-size: 1.3rem; margin-bottom: 0.85rem; }
+  .cert-t { font-size: 0.9rem; font-weight: 500; color: var(--white); margin-bottom: 0.2rem; }
+  .cert-by { font-size: 0.75rem; color: var(--sky); }
+
+  #contact { background: var(--fog); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+  .contact-text { font-size: 0.9rem; color: var(--muted); line-height: 1.8; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.9rem; }
+  .clink { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 1.4rem; background: var(--white); border: 1px solid var(--line); border-radius: 4px; text-decoration: none; color: inherit; transition: border-color 0.2s, transform 0.15s; }
+  .clink:hover { border-color: var(--blue); transform: translateX(4px); }
+  .clink-ico { width: 34px; height: 34px; border-radius: 50%; background: var(--ice); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: var(--blue); flex-shrink: 0; font-weight: 600; }
+  .clink-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .clink-val { font-size: 0.88rem; font-weight: 500; color: var(--navy); }
+
+  footer { text-align: center; padding: 1.75rem 3rem; border-top: 1px solid var(--line); font-size: 0.75rem; color: var(--muted); }
+
+  .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 860px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    #hero { grid-template-columns: 1fr; padding: 4rem 1.5rem 2.5rem; min-height: auto; }
+    .hero-card { display: none; }
+    .section { padding: 3.5rem 1.5rem; }
+    .exp-card { grid-template-columns: 1fr; }
+    .exp-meta { text-align: left; }
+    .skills-cols { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name" onclick="scrollToSection('hero')">Thuy An Truong</div>
+  <ul class="nav-links">
+    <li><a onclick="scrollToSection('experience')">Experience</a></li>
+    <li><a onclick="scrollToSection('education')">Education</a></li>
+    <li><a onclick="scrollToSection('skills')">Skills</a></li>
+    <li><a onclick="scrollToSection('contact')">Contact</a></li>
+  </ul>
+</nav>
+
+<div id="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Finance · International Business</div>
+    <h1 class="hero-name">Thuy An<br><em>Truong</em></h1>
+    <p class="hero-sub">Graduate student · Strategist · Builder</p>
+    <p class="hero-bio">Pursuing a Master's in Sustainable International Business with a Finance major across the University of Vaasa and IESEG France. Experienced in financial analysis, valuation, and cross-cultural stakeholder engagement.</p>
+    <div class="hero-btns">
+      <button class="btn-p" onclick="scrollToSection('contact')">Get in touch</button>
+      <button class="btn-o" onclick="scrollToSection('experience')">View work</button>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="hc-title">At a glance</div>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-n">4.5</div><div class="stat-l">GPA / 5.0</div></div>
+      <div class="stat"><div class="stat-n">3+</div><div class="stat-l">Countries worked</div></div>
+      <div class="stat"><div class="stat-n">2</div><div class="stat-l">Master's degrees</div></div>
+      <div class="stat"><div class="stat-n">4</div><div class="stat-l">Languages</div></div>
+    </div>
+    <div class="tags">
+      <span class="tag">Corporate Finance</span>
+      <span class="tag">Valuation</span>
+      <span class="tag">Power BI</span>
+      <span class="tag">Sustainability</span>
+      <span class="tag">Strategy</span>
+    </div>
+  </div>
+</div>
+
+<div id="experience" class="section">
+  <div class="inner">
+    <div class="section-label">Career</div>
+    <h2>Work <em>experience</em></h2>
+    <div class="exp-grid">
+      <div class="exp-card fade-in">
+        <div class="exp-meta"><div class="exp-date">Jun – Aug 2025</div><div class="exp-loc">Vaasa, Finland</div></div>
+        <div>
+          <div class="exp-role">Founder in Residence</div>
+          <div class="exp-co">Vaasa Startup Factory Incubator Program</div>
+          <ul class="exp-ul">
+            <li>Conducted market sizing and financial feasibility analysis</li>
+            <li>Developed cost assumptions and revenue projections</li>
+            <li>Built EMtoEM — a platform connecting international women students in Finland with mentors and peers globally</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-card fade-in">
+        <div class="exp-meta"><div class="exp-date">Oct – Dec 2024</div><div class="exp-loc">Vaasa, Finland</div></div>
+        <div>
+          <div class="exp-role">Project Specialist</div>
+          <div class="exp-co">Demola</div>
+          <ul class="exp-ul">
+            <li>Analysed sustainability reporting frameworks, performance metrics and UI/UX practices</li>
+            <li>Designed an e-certificate prototype integrated into the App Store to promote sustainable software development</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-card fade-in">
+        <div class="exp-meta"><div class="exp-date">Aug – Nov 2023</div><div class="exp-loc">Helsinki, Finland</div></div>
+        <div>
+          <div class="exp-role">Customer Care Specialist</div>
+          <div class="exp-co">Management Events</div>
+          <ul class="exp-ul">
+            <li>Managed CRM data accuracy for 1,000+ executive meetings weekly</li>
+            <li>Supported structured reporting and operational performance tracking</li>
+            <li>Coordinated communication across international stakeholders and high-level executives</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="education" class="section" style="background: var(--fog);">
+  <div class="inner">
+    <div class="section-label">Academic</div>
+    <h2><em>Education</em></h2>
+    <div class="edu-grid">
+      <div class="edu-card fade-in">
+        <div class="edu-deg">Master's in International Business — Sustainable Business</div>
+        <div class="edu-sch">University of Vaasa, Finland</div>
+        <div class="edu-yr">2024 – 2026</div>
+        <div class="edu-detail">Corporate Finance · Firms Valuation · Portfolio Management · Long Term Financing · International Strategic Management</div>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="edu-deg">Grande École Programme — Finance (Exchange)</div>
+        <div class="edu-sch">IÉSEG School of Management, France</div>
+        <div class="edu-yr">2025</div>
+        <div class="edu-detail">Exchange semester in international finance and business strategy.</div>
+        <span class="edu-badge">International Exchange</span>
+      </div>
+      <div class="edu-card fade-in">
+        <div class="edu-deg">BBA — International Business & Marketing</div>
+        <div class="edu-sch">Seinäjoki University of Applied Sciences, Finland</div>
+        <div class="edu-yr">2021 – 2024</div>
+        <div class="edu-detail">Graduated with distinction. Thesis graded 5/5.</div>
+        <span class="edu-badge">GPA 4.5 / 5.0</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="skills" class="section">
+  <div class="inner">
+    <div class="section-label">Competencies</div>
+    <h2>Skills &amp; <em>tools</em></h2>
+    <div class="skills-cols">
+      <div class="fade-in">
+        <div class="sg-title">Financial Analysis</div>
+        <div class="sk">Financial statement analysis <span class="sk-dot"></span></div>
+        <div class="sk">Valuation fundamentals <span class="sk-dot"></span></div>
+        <div class="sk">Portfolio management <span class="sk-dot"></span></div>
+        <div class="sk">Market & quantitative analysis <span class="sk-dot"></span></div>
+        <div class="sk">Risk management <span class="sk-dot"></span></div>
+      </div>
+      <div class="fade-in">
+        <div class="sg-title">Tools & Technology</div>
+        <div class="sk">Excel (advanced) <span class="sk-dot"></span></div>
+        <div class="sk">Power BI <span class="sk-dot"></span></div>
+        <div class="sk">Tableau <span class="sk-dot"></span></div>
+        <div class="sk">Microsoft Office Suite <span class="sk-dot"></span></div>
+        <div class="sk">Claude · ChatGPT · Lovable <span class="sk-dot"></span></div>
+      </div>
+      <div class="fade-in">
+        <div class="sg-title">Languages</div>
+        <div class="sk">English <span class="sk-level">Native</span></div>
+        <div class="sk">Vietnamese <span class="sk-level">Native</span></div>
+        <div class="sk">Finnish <span class="sk-level muted">A2</span></div>
+        <div class="sk">French <span class="sk-level muted">Basic</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="certs" class="section">
+  <div class="inner">
+    <div class="section-label">Credentials</div>
+    <h2>Certifi<em>cations</em></h2>
+    <div class="cert-grid">
+      <div class="cert-card fade-in">
+        <div class="cert-ico">📈</div>
+        <div class="cert-t">Bloomberg Market Concepts</div>
+        <div class="cert-by">Bloomberg</div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-ico">💻</div>
+        <div class="cert-t">Fundamentals of Digital Marketing</div>
+        <div class="cert-by">Google</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="contact" class="section" style="background: var(--fog);">
+  <div class="inner">
+    <div class="section-label">Connect</div>
+    <h2>Get in <em>touch</em></h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-text">I'm open to opportunities in finance, sustainability strategy, and international business. Whether you have a project, role, or collaboration in mind — I'd love to hear from you.</p>
+        <p class="contact-text" style="margin-top:1rem;">Currently based in <strong>Finland</strong>, with experience across Vietnam, Singapore, and France.</p>
+      </div>
+      <div class="contact-links">
+        <a class="clink" href="mailto:kittyhaan19@gmail.com">
+          <div class="clink-ico">✉</div>
+          <div><div class="clink-label">Email</div><div class="clink-val">kittyhaan19@gmail.com</div></div>
+        </a>
+        <a class="clink" href="https://linkedin.com/in/an-truong" target="_blank" rel="noopener">
+          <div class="clink-ico">in</div>
+          <div><div class="clink-label">LinkedIn</div><div class="clink-val">An Truong</div></div>
+        </a>
+        <a class="clink" href="tel:+358414856235">
+          <div class="clink-ico">☎</div>
+          <div><div class="clink-label">Phone</div><div class="clink-val">+358 41 485 6235</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 Thuy An Truong · Designed with care</footer>
+
+<script>
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 70);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
